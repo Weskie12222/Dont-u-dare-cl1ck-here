@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "building",
+	"key": {
+		"C": "minecraft:white_concrete",
+		"G": "minecraft:glass"
+	},
+	"pattern": [
+		"CCC",
+		"CGC",
+		"CCC"
+	],
+	"result": {
+		"id": "housebuilder:modern_house_builder"
+	}
+}

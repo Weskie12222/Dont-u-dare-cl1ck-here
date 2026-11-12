@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "building",
+	"key": {
+		"S": "minecraft:stone_bricks",
+		"I": "minecraft:iron_ingot"
+	},
+	"pattern": [
+		"SSS",
+		"SIS",
+		"SSS"
+	],
+	"result": {
+		"id": "housebuilder:military_barracks_builder"
+	}
+}

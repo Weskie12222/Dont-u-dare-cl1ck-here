@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "building",
+	"key": {
+		"P": "minecraft:oak_planks",
+		"L": "minecraft:oak_log"
+	},
+	"pattern": [
+		"PPP",
+		"PLP",
+		"PPP"
+	],
+	"result": {
+		"id": "housebuilder:wooden_house_builder"
+	}
+}
