@@ -2,7 +2,6 @@ package com.housebuilder;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -33,7 +32,6 @@ public class HouseBuilderBlock extends Block {
 		Direction forward = player.getDirection();
 		HouseGenerator.build(level, pos, forward, style);
 
-		player.displayClientMessage(Component.literal(style.displayName() + " built!"), true);
 		return InteractionResult.SUCCESS;
 	}
 }

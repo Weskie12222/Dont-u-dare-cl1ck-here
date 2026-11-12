@@ -5,6 +5,8 @@ import java.util.List;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -25,6 +27,19 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
  */
 public final class HouseGenerator {
 	private HouseGenerator() {}
+
+	/**
+	 * Looks up a vanilla block by its ID. Minecraft 26.2 regrouped the 16 colour
+	 * variants (concrete, wool, beds...) into collections and renamed the Java
+	 * fields, but the block IDs are unchanged, so we resolve them by ID.
+	 */
+	private static Block vanillaBlock(String name) {
+		return BuiltInRegistries.BLOCK.getValue(Identifier.fromNamespaceAndPath("minecraft", name));
+	}
+
+	private static BlockState vanilla(String name) {
+		return vanillaBlock(name).defaultBlockState();
+	}
 
 	public static void build(Level level, BlockPos origin, Direction forward, HouseStyle style) {
 		Ctx c = new Ctx(level, origin, forward);
@@ -98,7 +113,7 @@ public final class HouseGenerator {
 		c.set(-3, 5, 0, Blocks.CRAFTING_TABLE.defaultBlockState());
 		c.set(-2, 5, 0, c.facing(Blocks.FURNACE, back));
 		c.set(-1, 5, 0, c.facing(Blocks.CHEST, back));
-		c.bed(3, 4, 0, Blocks.RED_BED);
+		c.bed(3, 4, 0, vanillaBlock("red_bed"));
 	}
 
 	// ------------------------------------------------------------------
@@ -106,10 +121,10 @@ public final class HouseGenerator {
 	// ------------------------------------------------------------------
 	private static void buildModern(Ctx c) {
 		BlockState air = Blocks.AIR.defaultBlockState();
-		BlockState white = Blocks.WHITE_CONCRETE.defaultBlockState();
-		BlockState black = Blocks.BLACK_CONCRETE.defaultBlockState();
-		BlockState gray = Blocks.GRAY_CONCRETE.defaultBlockState();
-		BlockState lightGray = Blocks.LIGHT_GRAY_CONCRETE.defaultBlockState();
+		BlockState white = vanilla("white_concrete");
+		BlockState black = vanilla("black_concrete");
+		BlockState gray = vanilla("gray_concrete");
+		BlockState lightGray = vanilla("light_gray_concrete");
 		BlockState glass = Blocks.GLASS.defaultBlockState();
 		Direction back = c.fwd.getOpposite();
 
@@ -163,7 +178,7 @@ public final class HouseGenerator {
 		c.set(3, 7, 0, Blocks.CRAFTING_TABLE.defaultBlockState());
 
 		// Upper floor: bed + bookshelves.
-		c.bed(3, 5, 5, Blocks.RED_BED);
+		c.bed(3, 5, 5, vanillaBlock("red_bed"));
 		c.fill(-3, -1, 7, 7, 5, 6, Blocks.BOOKSHELF.defaultBlockState());
 	}
 
@@ -259,9 +274,9 @@ public final class HouseGenerator {
 
 		// Barracks: four beds per side (head to the wall) with a footlocker at each bed.
 		for (int f = 4; f <= 7; f++) {
-			c.bed(-5, f, 0, Blocks.GREEN_BED, left);
+			c.bed(-5, f, 0, vanillaBlock("green_bed"), left);
 			c.set(-4, f, 0, c.facing(Blocks.CHEST, c.right));
-			c.bed(5, f, 0, Blocks.GREEN_BED, c.right);
+			c.bed(5, f, 0, vanillaBlock("green_bed"), c.right);
 			c.set(4, f, 0, c.facing(Blocks.CHEST, left));
 		}
 
@@ -284,7 +299,7 @@ public final class HouseGenerator {
 
 		// Forecourt: flagpole with a green banner of wool, and a sandbag barricade.
 		c.fill(-4, -4, -3, -3, 0, 8, Blocks.COBBLESTONE_WALL.defaultBlockState());
-		c.fill(-3, -1, -3, -3, 6, 7, Blocks.GREEN_WOOL.defaultBlockState());
+		c.fill(-3, -1, -3, -3, 6, 7, vanilla("green_wool"));
 		c.fill(3, 6, -3, -3, 0, 0, Blocks.SANDSTONE.defaultBlockState());
 		c.fill(4, 5, -3, -3, 1, 1, Blocks.SANDSTONE.defaultBlockState());
 	}
